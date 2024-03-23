@@ -1,4 +1,5 @@
 export const END_SYMBOL = "EEENNNDDD";
-export const wsHost = import.meta.env.VITE_WS_HOST;
-export const wsPort = import.meta.env.VITE_WS_HOST_PORT;
+// known issue: unable to get run time env variable from vite
+export const wsHost = "localhost";
+export const wsPort = "8080";
 export const wsUrl = `ws://${wsHost}:${wsPort}`;
