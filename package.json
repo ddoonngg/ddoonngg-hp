@@ -6,9 +6,9 @@
   "scripts": {
     "build:client": "cd client && yarn && yarn build",
     "start:server": "cd server && yarn && yarn tsc",
-    "build": "yarn build:client && echo 'Frontend built successfully!' && yarn start:server && echo 'Backend built successfully!'",
-    "start": "node server/index.js",
-    "deploy": "yarn build && echo 'Deployment completed!'"
+    "build": "set NODE_ENV=production && yarn build:client && echo 'Frontend built successfully!' && yarn start:server && echo 'Backend built successfully!'",
+    "start": "node server/dist/server.js",
+    "deploy": "yarn build && yarn start && echo 'Deployment completed!'"
   },
   "keywords": [],
   "author": "",
