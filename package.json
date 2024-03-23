@@ -1,0 +1,15 @@
+{
+  "name": "ddoonngg-hp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:client": "cd client && yarn install && yarn build",
+    "start:server": "cd server && yarn start",
+    "build": "yarn build:client && echo 'Frontend built successfully!' && yarn start:server",
+    "deploy": "yarn build && echo 'Deployment completed!'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
