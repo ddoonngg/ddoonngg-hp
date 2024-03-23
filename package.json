@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:client": "cd client && yarn && yarn build",
-    "start:server": "cd server && yarn",
+    "start:server": "cd server && yarn && yarn tsc",
     "build": "yarn build:client && echo 'Frontend built successfully!' && yarn start:server && echo 'Backend built successfully!'",
     "start": "node server/index.js",
     "deploy": "yarn build && echo 'Deployment completed!'"
