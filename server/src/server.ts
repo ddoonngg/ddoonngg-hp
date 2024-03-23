@@ -76,6 +76,7 @@ wss.on("connection", function connection(ws) {
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "public")));
 }
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.json());
 app.post("/chat", async (req, res) => {
