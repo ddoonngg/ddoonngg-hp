@@ -11,7 +11,7 @@ export default function ChatWindow() {
   const connectWebSocket = useCallback(() => {
     // Create a new WebSocket connection
     console.log("connectWebSocket()");
-    const wsUrl = `wss://${location.hostname}`;
+    const wsUrl = `//${location.hostname}`;
 
     wsRef.current = new WebSocket(wsUrl);
 
