@@ -1,8 +1,9 @@
 import dotenv from "dotenv";
 import path from "path";
+import fs from "fs";
 const envPath = path.resolve(__dirname, "../../", ".env");
 dotenv.config({ path: envPath });
-import http from "http";
+import https from "https";
 import { OpenAI } from "openai";
 import WebSocket from "ws";
 import express from "express";
@@ -19,8 +20,13 @@ function makeGetThreadIdFunc(): () => Promise<Thread> {
   };
 }
 
+const options = {
+  key: fs.readFileSync(path.resolve(__dirname, "../private.key")),
+  cert: fs.readFileSync(path.resolve(__dirname, "../certificate.pem")),
+};
+
 const app = express();
-const server = http.createServer(app);
+const server = https.createServer(options, app);
 const wss = new WebSocket.Server({ server });
 const openai = new OpenAI();
 const getThread = makeGetThreadIdFunc();
@@ -76,7 +82,6 @@ wss.on("connection", function connection(ws) {
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "public")));
 }
-app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.json());
 app.post("/chat", async (req, res) => {
