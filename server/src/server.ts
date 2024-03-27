@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs";
 const envPath = path.resolve(__dirname, "../../", ".env");
 dotenv.config({ path: envPath });
-import https from "https";
+import http from "http";
 import { OpenAI } from "openai";
 import WebSocket from "ws";
 import express from "express";
@@ -20,13 +20,15 @@ function makeGetThreadIdFunc(): () => Promise<Thread> {
   };
 }
 
-const options = {
-  key: fs.readFileSync(path.resolve(__dirname, "../private.key")),
-  cert: fs.readFileSync(path.resolve(__dirname, "../certificate.pem")),
-};
+// const options = {
+//   key: fs.readFileSync(path.resolve(__dirname, "../private.key")),
+//   cert: fs.readFileSync(path.resolve(__dirname, "../certificate.pem")),
+// };
+
+const options = {};
 
 const app = express();
-const server = https.createServer(options, app);
+const server = http.createServer(options, app);
 const wss = new WebSocket.Server({ server });
 const openai = new OpenAI();
 const getThread = makeGetThreadIdFunc();
