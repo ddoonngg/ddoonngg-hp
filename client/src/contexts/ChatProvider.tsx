@@ -22,7 +22,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const connectWebSocket = useCallback(() => {
     // Create a new WebSocket connection
     console.log("connectWebSocket() invoked");
-    const wsUrl = `ws://${location.hostname}:8080`;
+    const wsUrl = `wss://${location.hostname}:8080`;
 
     wsRef.current = new WebSocket(wsUrl);
 
