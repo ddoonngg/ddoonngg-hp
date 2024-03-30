@@ -22,22 +22,23 @@ const proxy = httpProxy.createProxyServer();
 // 在 Express 应用程序中进行 WebSocket 转发等其他操作
 app.use((req, res, next) => {
   // 检查传入请求的协议
-  console.log("request from passing to prxoxy", req);
   const isWebSocketRequest =
     req.headers["upgrade"] &&
     req.headers["upgrade"].toLowerCase() === "websocket";
-  const targetProtocol = isWebSocketRequest ? "ws://" : "http://";
 
-  // 解析请求 URL
-  const targetUrl = url.parse(targetProtocol + req.headers.host + req.url);
-
-  // 将请求转发到目标服务器
-  proxy.web(req, res, {
-    target: targetUrl,
-    ws: isWebSocketRequest || false, // 如果是 WebSocket 请求，设置为 true
-  });
+  // 如果是 WebSocket 请求，则进行代理
+  if (isWebSocketRequest) {
+    const targetProtocol = "ws://";
+    const targetUrl = new URL(req.url, targetProtocol + req.headers.host);
+    proxy.web(req, res, {
+      target: targetUrl,
+      ws: true,
+    });
+  } else {
+    // 如果不是 WebSocket 请求，则继续到下一个中间件
+    next();
+  }
 });
-
 function makeGetThreadIdFunc(): () => Promise<Thread> {
   let thread: Thread | null = null;
   return async () => {
