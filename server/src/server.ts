@@ -10,6 +10,34 @@ import express from "express";
 import { API_PORT } from "./constants";
 import { Thread } from "openai/resources/beta/threads/threads";
 
+const app = express();
+const server = http.createServer(app);
+
+const httpProxy = require("http-proxy");
+const url = require("url");
+
+// 创建一个反向代理服务器实例
+const proxy = httpProxy.createProxyServer();
+
+// 在 Express 应用程序中进行 WebSocket 转发等其他操作
+app.use((req, res, next) => {
+  // 检查传入请求的协议
+  console.log("request from passing to prxoxy", req);
+  const isWebSocketRequest =
+    req.headers["upgrade"] &&
+    req.headers["upgrade"].toLowerCase() === "websocket";
+  const targetProtocol = isWebSocketRequest ? "ws://" : "http://";
+
+  // 解析请求 URL
+  const targetUrl = url.parse(targetProtocol + req.headers.host + req.url);
+
+  // 将请求转发到目标服务器
+  proxy.web(req, res, {
+    target: targetUrl,
+    ws: isWebSocketRequest, // 如果是 WebSocket 请求，设置为 true
+  });
+});
+
 function makeGetThreadIdFunc(): () => Promise<Thread> {
   let thread: Thread | null = null;
   return async () => {
@@ -27,8 +55,6 @@ function makeGetThreadIdFunc(): () => Promise<Thread> {
 
 const options = {};
 
-const app = express();
-const server = http.createServer(options, app);
 const wss = new WebSocket.Server({ server });
 const openai = new OpenAI();
 const getThread = makeGetThreadIdFunc();
@@ -95,9 +121,6 @@ app.post("/chat", async (req, res) => {
       res.status(500).json({ error: e.message });
     }
   }
-});
-app.get("/api/health", (req, res) => {
-  res.json({ status: "ok", version: "1.0.0" });
 });
 
 app.get("/health", (req, res) => {
