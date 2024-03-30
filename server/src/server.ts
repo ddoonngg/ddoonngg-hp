@@ -7,14 +7,14 @@ import http from "http";
 import { OpenAI } from "openai";
 import WebSocket from "ws";
 import express from "express";
+import httpProxy from "http-proxy";
+import url from "url";
+
 import { API_PORT } from "./constants";
 import { Thread } from "openai/resources/beta/threads/threads";
 
 const app = express();
 const server = http.createServer(app);
-
-const httpProxy = require("http-proxy");
-const url = require("url");
 
 // 创建一个反向代理服务器实例
 const proxy = httpProxy.createProxyServer();
@@ -34,7 +34,7 @@ app.use((req, res, next) => {
   // 将请求转发到目标服务器
   proxy.web(req, res, {
     target: targetUrl,
-    ws: isWebSocketRequest, // 如果是 WebSocket 请求，设置为 true
+    ws: isWebSocketRequest || false, // 如果是 WebSocket 请求，设置为 true
   });
 });
 
