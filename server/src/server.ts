@@ -100,6 +100,10 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", version: "1.0.0" });
 });
 
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", version: "2.2." });
+});
+
 server.listen(API_PORT, () => {
   console.log(`Express server is listening at ${API_PORT}`);
 });
