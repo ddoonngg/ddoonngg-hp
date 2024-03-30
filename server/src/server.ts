@@ -19,26 +19,35 @@ const server = http.createServer(app);
 // 创建一个反向代理服务器实例
 const proxy = httpProxy.createProxyServer();
 
-// 在 Express 应用程序中进行 WebSocket 转发等其他操作
-app.use((req, res, next) => {
-  // 检查传入请求的协议
+server.on("upgrade", function (req, socket, head) {
+  // 代理WebSocket请求
   const isWebSocketRequest =
     req.headers["upgrade"] &&
     req.headers["upgrade"].toLowerCase() === "websocket";
+  // 检查传入请求的协议是否为 HTTPS
+  const isHttpsRequest = req.headers["x-forwarded-proto"] === "https";
 
-  // 如果是 WebSocket 请求，则进行代理
-  if (isWebSocketRequest) {
-    const targetProtocol = "ws://";
-    const targetUrl = new URL(req.url, targetProtocol + req.headers.host);
-    proxy.web(req, res, {
-      target: targetUrl,
-      ws: true,
-    });
-  } else {
-    // 如果不是 WebSocket 请求，则继续到下一个中间件
-    next();
+  // 如果请求不是 WebSocket 或不是 HTTPS 请求，则忽略
+  if (!isWebSocketRequest || !isHttpsRequest) {
+    return;
   }
+
+  if (typeof req.url === "undefined") {
+    // 如果 URL 路径不存在，则打印警告并返回
+    console.warn("URL path is undefined. Ignoring WebSocket request.");
+    return;
+  }
+
+  // 构造目标 URL
+  const targetProtocol = "ws://";
+  const targetUrl = new URL(req.url, targetProtocol + req.headers.host);
+
+  // 将 WebSocket 请求转发到目标服务器
+  proxy.ws(req, socket, head, {
+    target: targetUrl.href,
+  });
 });
+
 function makeGetThreadIdFunc(): () => Promise<Thread> {
   let thread: Thread | null = null;
   return async () => {
