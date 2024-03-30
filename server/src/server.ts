@@ -25,7 +25,7 @@ function makeGetThreadIdFunc(): () => Promise<Thread> {
 
 const keyVaultName = "myself-dev";
 const keyVaultUrl = `https://${keyVaultName}.vault.azure.net`;
-const certificateName = "my-cert";
+const certificateName = "dw-personal-cert8290abad-15dc-4fe3-afcd-5eff67963080";
 const credential = new DefaultAzureCredential();
 const client = new SecretClient(keyVaultUrl, credential);
 
