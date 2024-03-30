@@ -21,6 +21,7 @@ const proxy = httpProxy.createProxyServer();
 
 server.on("upgrade", function (req, socket, head) {
   // 代理WebSocket请求
+  console.log(req);
   const isWebSocketRequest =
     req.headers["upgrade"] &&
     req.headers["upgrade"].toLowerCase() === "websocket";
