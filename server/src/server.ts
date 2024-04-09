@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs";
 const envPath = path.resolve(__dirname, "../../", ".env");
 dotenv.config({ path: envPath });
-import https from "https";
+import http from "http";
 import { OpenAI } from "openai";
 import WebSocket from "ws";
 import express from "express";
@@ -23,25 +23,9 @@ function makeGetThreadIdFunc(): () => Promise<Thread> {
   };
 }
 
-const keyVaultName = "myself-dev";
-const keyVaultUrl = `https://${keyVaultName}.vault.azure.net`;
-const certificateName = "dw-personal-cert8290abad-15dc-4fe3-afcd-5eff67963080";
-const credential = new DefaultAzureCredential();
-const client = new SecretClient(keyVaultUrl, credential);
-
-async function getCertificateAndPrivateKey() {
-  const certificateSecret = await client.getSecret(certificateName);
-  return certificateSecret.value;
-}
-
-async function createHttpsServer() {
-  const pfx = (await getCertificateAndPrivateKey()) || "";
-
-  const options = {
-    pfx: Buffer.from(pfx, "base64"),
-  };
+async function createHttpServer() {
   const app = express();
-  const server = https.createServer(options, app);
+  const server = http.createServer({}, app);
   const wss = new WebSocket.Server({ server });
 
   const getThread = makeGetThreadIdFunc();
@@ -120,4 +104,4 @@ async function createHttpsServer() {
   });
 }
 
-createHttpsServer();
+createHttpServer();
