@@ -9,8 +9,6 @@ import WebSocket from "ws";
 import express from "express";
 import { API_PORT } from "./constants";
 import { Thread } from "openai/resources/beta/threads/threads";
-import { SecretClient } from "@azure/keyvault-secrets";
-import { DefaultAzureCredential } from "@azure/identity";
 
 const openai = new OpenAI();
 function makeGetThreadIdFunc(): () => Promise<Thread> {

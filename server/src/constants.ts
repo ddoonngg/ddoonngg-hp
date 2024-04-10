@@ -1,1 +1,1 @@
-export const API_PORT = process.env.API_PORT as string;
+export const API_PORT = "8080";

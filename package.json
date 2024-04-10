@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:client": "cd client && yarn && yarn build",
-    "start:server": "cd server && yarn && yarn tsc",
-    "build": "yarn build:client && echo 'Frontend built successfully!' && yarn start:server && echo 'Backend built successfully!'",
+    "build:client": "cd client && npm run && npm run build",
+    "start:server": "cd server && npm run && npm run tsc",
+    "build": "npm run build:client && echo 'Frontend built successfully!' && npm run start:server && echo 'Backend built successfully!'",
     "start": "node server/dist/server.js",
-    "deploy": "yarn build && NODE_ENV=production yarn start && echo 'Deployment completed!'"
+    "deploy": "npm run build && NODE_ENV=production npm run start && echo 'Deployment completed!'"
   }
 }
