@@ -79,6 +79,7 @@ async function createHttpServer() {
   });
 
   if (process.env.NODE_ENV === "production") {
+    console.log('Serving static files from "public" directory');
     app.use(express.static(path.join(__dirname, "public")));
   }
 
