@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --watch './**/*.ts' --exec 'npx tsx' ./src/server.ts",
     "start": "node dist/server.js",
-    "tsc": "tsc"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
