@@ -9,8 +9,5 @@
     "build:all": "npm run build:client && echo 'Frontend built successfully!' && npm run build:server && echo 'Backend built successfully!'",
     "start": "node server/dist/server.js",
     "deploy": "npm run build:all && NODE_ENV=production npm run start && echo 'Deployment completed!'"
-  },
-  "volta": {
-    "node": "19.9.0"
   }
 }
