@@ -6,6 +6,7 @@
   "scripts": {
     "build:client": "cd client && npm install && npm run build",
     "build:server": "cd server && npm install && npm run build",
+    "clean": "rm -rf client/node_modules server/node_modules",
     "build:all": "npm run build:client && echo 'Frontend built successfully!' && npm run build:server && echo 'Backend built successfully!'",
     "start": "node server/dist/server.js",
     "deploy": "npm run build:all && NODE_ENV=production npm run start && echo 'Deployment completed!'"
