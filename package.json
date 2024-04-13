@@ -10,8 +10,8 @@
     "dev:server": "cd server && npm run dev",
     "build:client": "cd client && npm install && npm run build",
     "build:server": "cd server && npm install && npm run build",
-    "clean": "rm -rf client/node_modules server/node_modules",
-    "build:all": "npm run build:client && echo 'Frontend built successfully!' && npm run build:server && echo 'Backend built successfully!'",
+    "clean": "rm -rf client/node_modules server/node_modules server/dist",
+    "build:all": "npm run clean && npm run build:client && echo 'Frontend built successfully!' && npm run build:server && echo 'Backend built successfully!'",
     "start": " NODE_ENV=production node server/dist/server.js"
   }
 }
