@@ -8,6 +8,7 @@ import {
 } from "react";
 import { END_SYMBOL } from "../constants";
 import { Message } from "../models/message";
+import { useDomainContext } from "./DomainProvider";
 
 const ChatContext = createContext<{
   messages: Message[];
@@ -17,6 +18,7 @@ const ChatContext = createContext<{
 export const useChatContext = () => useContext(ChatContext);
 
 export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
+  const { assistantName } = useDomainContext();
   const [messages, setMessages] = useState<Message[]>([]);
   const wsRef = useRef<WebSocket | null>(null);
   const connectWebSocket = useCallback(() => {
@@ -73,15 +75,24 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
-  const onSubmit = useCallback((inputMessage: Message) => {
-    // append user input
-    setMessages((prevMessages) => [...prevMessages, inputMessage]);
-    wsRef.current?.send(inputMessage.data);
-  }, []);
+  const onSubmit = useCallback(
+    (inputMessage: Message) => {
+      // append user input
+      setMessages((prevMessages) => [...prevMessages, inputMessage]);
+      wsRef.current?.send(
+        JSON.stringify({
+          data: inputMessage.data,
+          from: inputMessage.from,
+          assistantName,
+        })
+      );
+    },
+    [assistantName]
+  );
 
   useEffect(() => {
     return connectWebSocket();
-  }, []);
+  }, [connectWebSocket]);
 
   return (
     <ChatContext.Provider value={{ messages, onSubmit }}>

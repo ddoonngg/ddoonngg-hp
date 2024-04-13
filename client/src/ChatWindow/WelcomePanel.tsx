@@ -8,10 +8,10 @@ export default function WelcomePanel() {
       <Box mt={"5%"}>
         <RiRobot2Line size={"2.5rem"} />
       </Box>
-      <Heading color={"#80ed99"}>AI PROFILE BOT</Heading>
-      <Text fontSize={"lg"}>Please ask anything below</Text>
+      <Heading color={"green.500"}>AI PROFILE BOT</Heading>
+      <Text fontSize="medium">Please ask anything about me</Text>
       <VStack mt={8}>
-        <HintButton text="Introduce yourself." />
+        <HintButton text="Introduce yourself?" />
         <HintButton text="Tell me about your background?" />
         <HintButton text="What are your skills?" />
         <HintButton text="Share your experience?" />
