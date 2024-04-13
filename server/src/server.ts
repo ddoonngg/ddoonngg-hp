@@ -95,6 +95,7 @@ async function createHttpServer() {
     }
   });
   app.get("/health", (req, res) => {
+    console.log('GET "/health"');
     res.json({ status: "ok", version: "1.0.0" });
   });
 

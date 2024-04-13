@@ -7,7 +7,7 @@ import { DomainProvider } from "./contexts/DomainProvider";
 
 function App() {
   useEffect(() => {
-    axios.get("/health").then((res) => {
+    axios.get("/api/health").then((res) => {
       console.log(res.data);
     });
   }, []);

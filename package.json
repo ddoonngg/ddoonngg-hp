@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "setup": "cd client && npm install && cd ../server && npm install",
+    "dev": "npm run dev:server & npm run dev:client",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
     "build:client": "cd client && npm install && npm run build",
     "build:server": "cd server && npm install && npm run build",
     "clean": "rm -rf client/node_modules server/node_modules",
     "build:all": "npm run build:client && echo 'Frontend built successfully!' && npm run build:server && echo 'Backend built successfully!'",
-    "start": " NODE_ENV=production node server/dist/server.js",
-    "deploy": "npm run build:all && NODE_ENV=production npm run start && echo 'Deployment completed!'"
+    "start": " NODE_ENV=production node server/dist/server.js"
   }
 }
