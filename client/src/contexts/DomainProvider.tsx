@@ -14,7 +14,7 @@ export const DomainProvider = ({ children }: { children: React.ReactNode }) => {
   const assistantName =
     domainName.indexOf("localhost") !== -1 ||
     domainName.indexOf("tc4869") !== -1
-      ? "Tina"
+      ? "Dong"
       : "Dong";
 
   return (

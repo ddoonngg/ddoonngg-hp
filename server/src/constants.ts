@@ -5,4 +5,4 @@ dotenv.config({ path: envPath });
 
 export const API_PORT = "8080";
 export const TINA_AGENT_ID = process.env.TINA_AGENT_ID as string;
-export const DONG_AGENT_ID = process.env.TINA_AGENT_ID as string;
+export const DONG_AGENT_ID = process.env.DONG_AGENT_ID as string;
