@@ -1,4 +1,4 @@
-import { useChatContext } from "../contexts/ChatProvider";
+import { useChatContext } from "../../contexts/ChatProvider";
 import ChatInput from "./ChatInput";
 import ChatMessageList from "./ChatMessageList";
 import { Box, VStack } from "@chakra-ui/react";

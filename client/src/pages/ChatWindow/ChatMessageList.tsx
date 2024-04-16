@@ -1,7 +1,7 @@
 import { VStack } from "@chakra-ui/react";
 import MessageItem from "./MessageItem";
 import WelcomePanel from "./WelcomePanel";
-import { useChatContext } from "../contexts/ChatProvider";
+import { useChatContext } from "../../contexts/ChatProvider";
 
 export default function ChatMessageList() {
   const { messages } = useChatContext();

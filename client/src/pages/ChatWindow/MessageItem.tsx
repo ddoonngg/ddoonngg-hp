@@ -1,8 +1,8 @@
 import { HStack, WrapItem, Text, VStack, Heading } from "@chakra-ui/react";
-import { Message } from "../models/message";
+import { Message } from "../../models/message";
 import { RiRobot2Line } from "react-icons/ri";
 import { FaRegUser } from "react-icons/fa";
-import { useDomainContext } from "../contexts/DomainProvider";
+import { useDomainContext } from "../../contexts/DomainProvider";
 
 export default function MessageItem({ message }: { message: Message }) {
   const { from, data } = message;

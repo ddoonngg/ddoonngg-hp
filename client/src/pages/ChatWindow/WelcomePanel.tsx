@@ -1,6 +1,6 @@
 import { Box, VStack, Text, Heading, Button } from "@chakra-ui/react";
 import { RiRobot2Line } from "react-icons/ri";
-import { useChatContext } from "../contexts/ChatProvider";
+import { useChatContext } from "../../contexts/ChatProvider";
 
 export default function WelcomePanel() {
   return (

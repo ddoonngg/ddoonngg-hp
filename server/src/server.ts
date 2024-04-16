@@ -4,10 +4,10 @@ import { OpenAI } from "openai";
 import WebSocket from "ws";
 import express from "express";
 import { API_PORT, TINA_AGENT_ID } from "./constants";
-import { Thread } from "openai/resources/beta/threads/threads";
 import { openai } from "./openai";
 import { getAgentId } from "./agent";
 import { sessionManager } from "./connection";
+import { router } from "./routes";
 
 const app = express();
 const server = http.createServer({}, app);
@@ -87,20 +87,8 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use(express.json());
-app.post("/chat", async (req, res) => {
-  try {
-    res.json({ message: "Hello, World!" });
-  } catch (e: unknown) {
-    // 'e' is typed as 'unknown'
-    if (e instanceof Error) {
-      res.status(500).json({ error: e.message });
-    }
-  }
-});
-app.get("/health", (req, res) => {
-  console.log('GET "/health"');
-  res.json({ status: "ok", version: "1.0.0" });
-});
+
+app.use("/", router);
 
 server.listen(API_PORT, () => {
   console.log(`Express server is listening at ${API_PORT}`);
