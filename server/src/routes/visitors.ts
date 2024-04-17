@@ -4,11 +4,14 @@ import { visitorsCountService } from "../services/visitorsCountService";
 
 export const visitorsRoute = Router();
 
-visitorsRoute.get("/count", (req, res) => {
-  res.json({ count: visitorsCountService.getCount() });
+visitorsRoute.get("/count", async (req, res) => {
+  console.log("GET /count");
+  const count = await visitorsCountService.getCount();
+  console.log("Count:", count);
+  res.json({ count: count });
 });
 
-visitorsRoute.post("/count", (req, res) => {
-  visitorsCountService.incrementCount();
-  res.json({ count: visitorsCountService.getCount() });
+visitorsRoute.post("/count", async (req, res) => {
+  const count = visitorsCountService.incrementCount();
+  res.json({ count: count });
 });

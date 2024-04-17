@@ -1,12 +1,23 @@
-class VisitorsCountService {
-  private count: number = 0;
+import { redisClient } from "../redis";
 
-  public incrementCount() {
-    this.count++;
+class VisitorsCountService {
+  private static readonly vistorsCount = "visitors_count";
+
+  constructor() {
+    this.init();
   }
 
-  public getCount() {
-    return this.count;
+  async init() {
+    await redisClient.connect();
+  }
+
+  public async incrementCount() {
+    return redisClient.incr(VisitorsCountService.vistorsCount);
+  }
+
+  public async getCount() {
+    const count = await redisClient.get(VisitorsCountService.vistorsCount);
+    return count ? parseInt(count) : 0;
   }
 }
 
