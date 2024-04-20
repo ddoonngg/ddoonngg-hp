@@ -12,15 +12,16 @@ export function Welcome() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowWelcome(false);
+      if (showWelcome) {
+        setShowWelcome(false);
+      }
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [showWelcome]);
 
   useEffect(() => {
     const lastVisitTime = localStorage.getItem("lastVisitTime");
-    console.log("use effect running");
     // if last visit time is not set or last visit time is more than 24 hours ago
     if (
       !lastVisitTime ||
@@ -47,35 +48,28 @@ export function Welcome() {
           setIsLoading(false);
         });
     }
-  });
+  }, []);
 
   const gradientBackground =
     "linear-gradient(135deg, #78ffd6 0%, #a8ff78 100%)";
 
-  return isLoading ? (
-    <PageLoader />
+  if (isLoading) {
+    return <PageLoader />;
+  }
+
+  return showWelcome ? (
+    <Flex
+      width={"100vw"}
+      height={"100vh"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      css={{ background: gradientBackground }}
+    >
+      <Box fontSize={["2xl", "3xl", "4xl"]} className="gluten-title" p={[4, 8]}>
+        Greetings! You are our {visitorsCount} visitor.
+      </Box>
+    </Flex>
   ) : (
-    <>
-      {showWelcome ? (
-        <Flex
-          width={"100vw"}
-          height={"100vh"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          display={showWelcome ? "flex" : "none"}
-          css={{ background: gradientBackground }}
-        >
-          <Box
-            fontSize={["2xl", "3xl", "4xl"]}
-            className="gluten-title"
-            p={[4, 8]}
-          >
-            Greetings! You are our #{visitorsCount} visitor.
-          </Box>
-        </Flex>
-      ) : (
-        <ChatWindow />
-      )}
-    </>
+    <ChatWindow />
   );
 }
