@@ -6,7 +6,7 @@ import { PageLoader } from "../../layouts/PageLoader";
 import ChatWindow from "../ChatWindow/ChatWindow";
 
 export function Welcome() {
-  const [visitorsCount, setVisitorsCount] = useState(0);
+  const [visitorsCount, setVisitorsCount] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showWelcome, setShowWelcome] = useState(true);
 
@@ -53,7 +53,7 @@ export function Welcome() {
   const gradientBackground =
     "linear-gradient(135deg, #78ffd6 0%, #a8ff78 100%)";
 
-  if (isLoading) {
+  if (isLoading || visitorsCount === null) {
     return <PageLoader />;
   }
 

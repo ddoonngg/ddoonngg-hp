@@ -10,7 +10,7 @@ visitorsRoute.get("/count", async (req, res) => {
   res.json({ count });
 });
 
-visitorsRoute.patch("/count", async (req, res) => {
-  await visitorsCountService.incrementCount();
-  res.json({ count: visitorsCountService.getCount() });
+visitorsRoute.post("/count", async (req, res) => {
+  const count = await visitorsCountService.incrementCount();
+  res.json({ count });
 });
