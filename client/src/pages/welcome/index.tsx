@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Box, Flex } from "@chakra-ui/react";
 import axios from "axios";
 
 import { PageLoader } from "../../layouts/PageLoader";
